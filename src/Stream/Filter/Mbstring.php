@@ -5,7 +5,8 @@
    * @package  Stream_Filter_Mbstring
    * @author  Yoshio HANAWA <hanawa@dino.co.jp>
    * @copyright  2009 Yoshio HANAWA
-   * @license  http://www.php.net/license/3_0.txt  PHP License 3.0
+   * @license  http://www.php.net/license/3_01.txt  The PHP License, version 3.01
+   * @link  http://openpear.org/package/Stream_Filter_Mbstring
    */
 
 class Stream_Filter_Mbstring  extends php_user_filter
