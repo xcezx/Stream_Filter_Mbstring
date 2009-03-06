@@ -4,10 +4,10 @@ require_once 'Stream/Filter/Mbstring.php';
 
 $ret = stream_filter_register("convert.mbstring.*", "Stream_Filter_Mbstring");
 
-if ($argv[1]) {
+if (isset($argv[1])) {
   $file = $argv[1];
 } else {
-  $file = 'php://input';
+  $file = 'php://stdin';
 }
 $fp = fopen($file, 'r');
 if ($fp === false) {
