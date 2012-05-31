@@ -1,0 +1,13 @@
+{
+    "name": "openpear/Stream_Filter_Mbstring",
+    "description": "mbstring を使って文字列変換を行う stream filter",
+    "type": "library",
+    "license": "PHP-3.01",
+    "version": "0.0.7",
+    "authors": [
+        {
+            "name": "MAEKAWA Tsuyoshi",
+            "email": "main.xcezx@gmail.com"
+        }
+    ]
+}
