@@ -16,7 +16,7 @@ class Stream_Filter_Mbstring  extends php_user_filter
     private $convert_args = array();
     private $from_encoding;
 
-    function onCreate()
+    public function onCreate()
     {
         if (preg_match('/^convert\.mbstring\.kana\.([A-z]*)(?:\:([-\w]+))?$/',
                        $this->filtername, $matches)) {
@@ -64,7 +64,7 @@ class Stream_Filter_Mbstring  extends php_user_filter
      * @param boolean $closing
      * @return integer PSFS_* constants
      */
-    function filter($in, $out, &$consumed, $closing)
+    public function filter($in, $out, &$consumed, $closing)
     {
         while ($bucket = stream_bucket_make_writeable($in)) {
             $buffered_data = $this->remains . $bucket->data;
