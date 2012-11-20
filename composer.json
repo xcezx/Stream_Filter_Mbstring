@@ -14,5 +14,10 @@
             "email": "main.xcezx@gmail.com",
             "role": "maintainer"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-0": {
+            "Stream_Filter_Mbstring": "src/"
+        }
+    }
 }
