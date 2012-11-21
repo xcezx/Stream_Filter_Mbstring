@@ -18,8 +18,7 @@ class Stream_Filter_Mbstring  extends php_user_filter
 
     public function onCreate()
     {
-        if (preg_match('/^convert\.mbstring\.kana\.([A-z]*)(?:\:([-\w]+))?$/',
-                       $this->filtername, $matches)) {
+        if (preg_match('/^convert\.mbstring\.kana\.([A-z]*)(?:\:([-\w]+))?$/', $this->filtername, $matches)) {
             $this->convert_func = "mb_convert_kana";
             $convert_option = $matches[1];
             if ($matches[2]) {
@@ -28,8 +27,7 @@ class Stream_Filter_Mbstring  extends php_user_filter
                 $this->from_encoding = "auto";
             }
             $this->convert_args = array("", $convert_option, $this->from_encoding);
-        } elseif (preg_match('/^convert\.mbstring(?:\.encoding)?(?:\.([-\w]+)\:([-\w]+))?$/',
-                             $this->filtername, $matches)) {
+        } elseif (preg_match('/^convert\.mbstring(?:\.encoding)?(?:\.([-\w]+)\:([-\w]+))?$/', $this->filtername, $matches)) {
             $this->convert_func = "mb_convert_encoding";
             if ($matches[1] && $matches[2]) {
                 $this->from_encoding = $matches[1];
@@ -42,27 +40,29 @@ class Stream_Filter_Mbstring  extends php_user_filter
         } else {
             /* その他の convert.mbstring.* フィルタが問い合わせられた場合は
                失敗を報告し、PHP が検索を続けられるようにする */
+
             return false;
         }
-        if (call_user_func_array($this->convert_func, $this->convert_args)
-            === false) {
+        if (call_user_func_array($this->convert_func, $this->convert_args) === false) {
             // エンコーディングの指定が間違っていたらフィルタを登録しない
             $this->from_encoding = "";
             $this->convert_func = "";
             $this->convert_args = array();
+
             return false;
         }
+
         return true;
     }
 
     /**
      * This method is called on fwrite, fread, etc
      *
-     * @param bucket_brigade $in
-     * @param bucket_brigade $out
-     * @param integer $consumed
-     * @param boolean $closing
-     * @return integer PSFS_* constants
+     * @param  bucket_brigade $in
+     * @param  bucket_brigade $out
+     * @param  integer        $consumed
+     * @param  boolean        $closing
+     * @return integer        PSFS_* constants
      */
     public function filter($in, $out, &$consumed, $closing)
     {
@@ -81,6 +81,7 @@ class Stream_Filter_Mbstring  extends php_user_filter
             if (strlen($data) === 0) {
                 // 有り得ないとは思うが、唯一処理するものが無いパターン
                 $this->remains = $remains;
+
                 return PSFS_FEED_ME;
             }
             $this->remains = $remains;
@@ -92,7 +93,7 @@ class Stream_Filter_Mbstring  extends php_user_filter
         }
 
         // 最後のbucketを処理し終わった。万一残りがあるようならflushする。
-        if ($closing && strlen($this->remains) > 0){
+        if ($closing && strlen($this->remains) > 0) {
             $call_args = $this->convert_args;
             $call_args[0] = $this->remains;
             $this->remains = call_user_func_array($this->convert_func, $call_args);
